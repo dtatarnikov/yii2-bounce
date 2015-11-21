@@ -5,6 +5,7 @@ use Yii;
 use yii\base\Component;
 use strong2much\bounce\models\Bounce;
 use strong2much\bounce\models\BounceHistory;
+use strong2much\bounce\helpers\BounceHandler;
 
 /**
  * BounceManager is an application component that manages with email bounces
@@ -83,5 +84,41 @@ class BounceManager extends Component
     public function numberOfBounces($address)
     {
         return BounceHistory::find()->where(['email'=>$address])->count();
+    }
+
+    /**
+     * Bounce handler for working with bouncing raw email
+     * @param string $message raw email message
+     * @return BounceHandler
+     */
+    public function getHandler($message)
+    {
+        $handler = new BounceHandler();
+        $handler->parse_email($message);
+        return $handler;
+    }
+
+    /**
+     * Parse raw email and return multi array of bounce data
+     * (that is used in (@see pushReport)
+     * @param string $message raw email message
+     * @return array
+     */
+    public function parseMessage($message)
+    {
+        $handler = $this->getHandler($message);
+
+        $data = [];
+        foreach($handler->output as $response) {
+            $data[] = [
+                'recipient' => $handler->recipient,
+                'critical' => $response['action'] == 'failed',
+                'type' => $response['action'],
+                'status' => $response['status'],
+                'reason' => $handler->fetch_status_messages($response['status']),
+            ];
+        }
+
+        return $data;
     }
 }
