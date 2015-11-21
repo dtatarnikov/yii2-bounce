@@ -75,19 +75,4 @@ class BounceHistory extends ActiveRecord
 			'is_critical' => Yii::t('bounce', 'Is critical'),
 		];
 	}
-
-    /**
-     * @param string $email
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search($email = null)
-    {
-        $query = $this->find();
-        $query->filterWhere(['like', 'email', $email]);
-
-        return new ActiveDataProvider([
-            'query'=>$query,
-            'pagination'=>false,
-        ]);
-    }
 }

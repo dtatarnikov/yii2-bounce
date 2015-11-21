@@ -3,7 +3,6 @@ namespace strong2much\bounce\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 
 /**
@@ -63,20 +62,4 @@ class Bounce extends ActiveRecord
 			'time' => Yii::t('bounce', 'Time'),
 		];
 	}
-
-    /**
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search()
-    {
-        $query = $this->find();
-        $query->filterWhere(['like', 'email', $this->email]);
-
-        return new ActiveDataProvider([
-            'query'=>$query,
-            'sort'=>[
-                'defaultOrder' => '[[time]] DESC',
-            ],
-        ]);
-    }
 }
