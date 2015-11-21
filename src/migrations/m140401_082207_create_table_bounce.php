@@ -7,7 +7,7 @@ use yii\db\Migration;
  *
  * @author   Denis Tatarnikov <tatarnikovda@gmail.com>
  */
-class m140401_082207_table_email_bounce extends Migration
+class m140401_082207_create_table_bounce extends Migration
 {
     public function safeUp()
     {
