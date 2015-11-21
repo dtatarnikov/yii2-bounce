@@ -21,7 +21,7 @@ $ composer require strong2much/yii2-bounce "dev-master"
 Use the following code in your configuration file. You can use different services
 ```php
 'bounce' => [
-    'class' => 'strong2much\bounce\'
+    'class' => 'strong2much\bounce\BounceManager'
 ]
 ```
 
