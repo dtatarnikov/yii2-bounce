@@ -34,7 +34,7 @@ class BounceSearch extends Bounce
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => '[[time]] DESC',
+                'defaultOrder' => ['time' => SORT_DESC],
             ],
         ]);
 
