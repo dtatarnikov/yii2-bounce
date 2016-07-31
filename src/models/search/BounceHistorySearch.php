@@ -26,9 +26,10 @@ class BounceHistorySearch extends BounceHistory
     /**
      * Creates data provider instance with search query applied
      * @param array $params
+     * @param string $email for history search
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $email)
     {
         $query = BounceHistory::find();
 
@@ -37,9 +38,11 @@ class BounceHistorySearch extends BounceHistory
             'sort' => [
                 'defaultOrder' => ['time' => SORT_DESC],
             ],
+            'pagination' => false,
         ]);
 
         $this->load($params);
+        $this->email = $email;
 
         if (!$this->validate()) {
             return $dataProvider;
