@@ -21,6 +21,16 @@ class BounceManager extends Component
     public $maxSoftBounces = 10;
 
     /**
+     * @var array list of statuses that we count as soft
+     */
+    public $softStatuses = [
+        '5.0.0',
+        '5.3.4',
+        '5.7.0',
+        '5.2.0'
+    ];
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -66,6 +76,9 @@ class BounceManager extends Component
             return false;
 
         if(!isset($data['critical']))
+            $data['critical'] = false;
+
+        if(isset($data['status']) && in_array($data['status'], $this->softStatuses))
             $data['critical'] = false;
 
         if($this->numberOfBounces($address)>$this->maxSoftBounces)
@@ -142,6 +155,7 @@ class BounceManager extends Component
         if(!isset($i18n->translations['bounce*'])) {
             $i18n->translations['bounce*'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en-US',
                 'basePath' => '@strong2much/bounce/messages',
             ];
         }
