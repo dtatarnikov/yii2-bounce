@@ -25,6 +25,24 @@ Use the following code in your configuration file.
 ]
 ```
 
+For auto recognition of translation, put this component to bootstrap in your config
+```php
+'bootstrap' => ['bounce'],
+```
+otherwise specify it by yourself in i18n components
+```php
+'i18n' => [
+    'translations' => [
+        ...
+        'bounce*' => [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@strong2much/bounce/messages',
+        ],
+        ...
+    ],
+],
+```
+
 You can use it as follows:
 ```php
 //To add bounce report

@@ -6,6 +6,7 @@ use yii\base\Component;
 use strong2much\bounce\models\Bounce;
 use strong2much\bounce\models\BounceHistory;
 use strong2much\bounce\helpers\BounceHandler;
+use yii\helpers\ArrayHelper;
 
 /**
  * BounceManager is an application component that manages with email bounces
@@ -18,6 +19,16 @@ class BounceManager extends Component
      * @var int max number of soft bounces after that it will be blocked permanently
      */
     public $maxSoftBounces = 10;
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->registerTranslations();
+    }
 
     /**
      * Retrieve bounce report from DB
@@ -120,5 +131,19 @@ class BounceManager extends Component
         }
 
         return $data;
+    }
+
+    /**
+     * Register translation
+     */
+    protected function registerTranslations()
+    {
+        $i18n = Yii::$app->i18n;
+        if(!isset($i18n->translations['bounce*'])) {
+            $i18n->translations['bounce*'] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@strong2much/bounce/messages',
+            ];
+        }
     }
 }
